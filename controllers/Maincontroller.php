@@ -1,5 +1,6 @@
 <?php
-
+#require_once 'library/TemplateSimple.php';
+#require_once 'library/Template.php';
 #require_once 'controllers/Testcontroller.php';
 /**
  * Description of Maincontroller
@@ -19,6 +20,13 @@ class Maincontroller{
      */
     public $tpl = "";
         
+    /**
+     * template Engine
+     * @param type $class 
+     */
+    public $templateEngine ="TemplateSimple";
+    
+    
     public function __construct ($class) {
         $this->className = $class;
     }
@@ -28,26 +36,39 @@ class Maincontroller{
         $firstLetter = substr($this->className,0,1);
         $controllerClass = substr_replace($this->className, strtoupper($firstLetter), 0, 1) . 'controller' ;
         require_once 'controllers/'. $controllerClass .'.php';
-        #$t = new $controllerClass();
-        #var_dump($t);
-        #die;
         return new $controllerClass();
         
     }
     
-    public function loadTemplate($templateFile ="") {
-        require_once 'library/TemplateSimple.php';
-        $this->tpl = new TemplateSimple(); 
-        $this->tpl->load("$templateFile.php"); 
-        #$this->tpl->assign("title", "der text..."); 
-        #$this->tpl->out(); 
+    public function setTemplateEngine($templateEngine="") {
+        try {
+            $this->templateEngine = $templateEngine;
+            require_once 'library/'.$templateEngine.'.php';
+        
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    
+    public function getTemplateEngine() {
+        return $this->templateEngine;
+    }
+    
+    public function loadTemplate($templateFile) {
+        try {
+            require_once 'library/TemplateSimple.php';
+            $templateEngine = $this->templateEngine;
+            $this->tpl = new $templateEngine(); 
+            $this->tpl->load("$templateFile.php");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
     
     public function assignVars($vars = array()) {
         foreach ($vars as $key => $value) {
             $this->tpl->assign($key, $value); 
         }
-        
     }
     
     public function render() {

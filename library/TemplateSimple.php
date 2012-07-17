@@ -121,18 +121,22 @@ class TemplateSimple {
         // Die Eigenschaften zuweisen
         $this->templateName = $file;
         $this->templateFile = $this->templateDir.$file;
-
+        if(!file_exists($this->templateFile)) {
+            throw new Exception("Template file:" . $this->templateFile ." does not exist");
+        }
         // Wenn ein Dateiname übergeben wurde, versuchen, die Datei zu öffnen
         if(!empty($this->templateFile)) {
             if($fp = @fopen($this->templateFile, "r")) {
                 // Den Inhalt des Templates einlesen
-                $this->template = fread($fp, filesize($this->templateFile)); 
+                $this->template = utf8_decode(fread($fp, filesize($this->templateFile))); 
+                #$this->template = fread($fp, filesize($this->templateFile)); 
                 fclose ($fp); 
             } else {
                 return false;
             }
         }
 
+        
         // Die methode replaceFuntions() aufrufen
         $this->replaceFunctions();
         
@@ -184,9 +188,33 @@ class TemplateSimple {
      */
     public function out()
     {
-        echo $this->template;
+        $this->evalPhpCode($this->template);
+        echo  $this->template;
         return true;
     }
+    
+    
+    public function evalPhpCode($sEval){
+        // Your Web Page Source Code...
+        preg_match_all("/(<\?php|<\?)(.*?)\?>/si", $sEval, $aMatches);
+        $iMatchIndex = 0;
+        while (isset($aMatches[0][$iMatchIndex])) {
+            $sRawPhp = $aMatches[0][$iMatchIndex];
+            $sRawPhp = str_replace("<?php", "", $sRawPhp);
+            $sRawPhp = str_replace("?>", "", $sRawPhp);
+            ob_start();
+            eval("$sRawPhp;");
+            $sExecPhp = ob_get_contents();
+            ob_end_clean();
+            $sEval = preg_replace("/(<\?php|<\?)(.*?)\?>/si", $sExecPhp, $sEval, 1);
+            $iMatchIndex++;
+        }
+        //remove every placeholder thats left and not replaced:
+	$sEval  = preg_replace( "/\{(.*?)\}/" , "" , $sEval);
+        
+        $this->template = $sEval; 
+    }
+
 }
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once 'library/TemplateSimple.php';
+
 require_once 'controllers/Maincontroller.php';
 /**
  * Description of Testcontroller
@@ -24,7 +24,6 @@ class Testcontroller extends Maincontroller{
     }
     
     public function testtwo ($template ="") {
-        
         $this->loadTemplate('testtwo');
         $input = array('title' => $_GET['title'], 'name' => $_GET['name']);
         $this->assignVars($input);
