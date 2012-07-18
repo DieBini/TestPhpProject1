@@ -3,7 +3,7 @@ $(document).ready(function() {
     //click event für submit button
 
 
-$(document).on('click', '#submit', function() {
+    $(document).on('click', '#submit', function() {
 
     
         //Daten von den HTML Feldern in JS-Vars übersetzen

@@ -16,62 +16,62 @@
         <script src="http://nb.einsclone.lo/templates/biniajax.js"></script>
         
         
-<style type="text/css">
-<!--          
-body{
-        text-align:left;
-}
- 
-.loading_icon {
-	float:left;
-	background:url(ajax-loader.gif) no-repeat 1px;
-	height:30px;
-	width:30px;
-	display:none;
-}
-.done {
-	background:url(iconIdea.gif) no-repeat 2px;
-	padding-left:20px;
-	font-size:12px;
-	width:70%;
-	margin:20px auto;
-	display:none
-}
- 
-.clear {clear:both}
- 
-.block {
-	width:400px;
-	margin:0 auto;
-	text-align:left;
-}
-.input * {
+        <style type="text/css">
+        <!--          
+        body{
+                text-align:left;
+        }
     
-	padding:5px;
-	margin:2px;
-	font-size:12px;
-}
-.input label {
-	float:left;
-	width:75px;
-	font-weight:700
-}
-.input input.text {
-	float:left;
-	width:270px;
-	padding-left:20px;
-}
-.input .textarea {
-	height:120px;
-	width:270px;
-	padding-left:20px;
-}
- 
-.input #submit {
-	float:left;
-	margin-right:10px;
-}
--->
+        .loading_icon {
+                float:left;
+                background:url(ajax-loader.gif) no-repeat 1px;
+                height:30px;
+                width:30px;
+                display:none;
+        }
+        .done {
+                background:url(iconIdea.gif) no-repeat 2px;
+                padding-left:20px;
+                font-size:12px;
+                width:70%;
+                margin:20px auto;
+                display:none
+        }
+    
+        .clear {clear:both}
+    
+        .block {
+                width:400px;
+                margin:0 auto;
+                text-align:left;
+        }
+        .input * {
+    
+                padding:5px;
+                margin:2px;
+                font-size:12px;
+        }
+        .input label {
+                float:left;
+                width:75px;
+                font-weight:700
+        }
+        .input input.text {
+                float:left;
+                width:270px;
+                padding-left:20px;
+        }
+        .input .textarea {
+                height:120px;
+                width:270px;
+                padding-left:20px;
+        }
+    
+        .input #submit {
+                float:left;
+                margin-right:10px;
+        }
+        -->
         </style> 
            
       </head>  
@@ -99,7 +99,7 @@ body{
                     </div>
                     <div class="input">
                         <input type="submit" id="submit"/>
-                        <div class="loading_icon"></div>
+                            <div class="loading_icon"></div>
                     </div>
                     </form>
                     </div>
