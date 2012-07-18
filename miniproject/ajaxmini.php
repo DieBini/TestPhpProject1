@@ -9,6 +9,7 @@ if(!empty($_GET['name'])){
         $back[$key] = $value;
     }
     #$ret = Array("hello" => "Hallo ".$_GET['name'], "ip" => $_SERVER['REMOTE_ADDR'] );
+    sleep(2);
     echo json_encode($back);
 }
  

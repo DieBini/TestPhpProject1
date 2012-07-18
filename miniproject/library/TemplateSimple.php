@@ -1,21 +1,13 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of TemplateSimple
  *
  * @author sabinesteinkamp
  */
 class TemplateSimple {
-    //put your code here
-    
-    
-       /**
-     * Der Ordner in dem sich die Template-Dateien befinden.
+
+    /**
+     * Path to templates
      *
      * @access public
      * @var    string
@@ -24,7 +16,7 @@ class TemplateSimple {
     
     
     /**
-     * Der linke Delimter für einen Standard-Platzhalter
+     * left delimeter
      *
      * @access public
      * @var    string
@@ -32,7 +24,7 @@ class TemplateSimple {
     protected $leftDelimiter = '{$';
     
     /**
-     * Der rechte Delimter für einen Standard-Platzhalter
+     * right delimeter
      *
      * @access public
      * @var    string
@@ -41,9 +33,7 @@ class TemplateSimple {
 
 
     /**
-     * Der linke Delimter für ein Kommentar
-     * Sonderzeichen müssen escaped werden, weil der Delimter in einem RegExp
-     * verwendet wird.
+     * left delimter for comments
      *
      * @access public
      * @var    string
@@ -51,9 +41,7 @@ class TemplateSimple {
     protected $leftDelimiterC = '\{\*';
     
     /**
-     * Der rechte Delimter für ein Kommentar
-     * Sonderzeichen müssen escaped werden, weil der Delimter in einem RegExp
-     * verwendet wird.
+     * right delimeter for comments
      *
      * @access public
      * @var    string
@@ -62,7 +50,7 @@ class TemplateSimple {
     
 
     /**
-     * Der komplette Pfad der Templatedatei.
+     * path to template file
      *
      * @access protected
      * @var    string
@@ -71,7 +59,7 @@ class TemplateSimple {
     
     
     /**
-     * Der Dateiname der Templatedatei
+     * template name
      *
      * @access protected
      * @var    string
@@ -79,7 +67,7 @@ class TemplateSimple {
     protected $templateName = "";
     
     /**
-     * Der Inhalt des Templates.
+     * template value
      *
      * @access protected
      * @var    string
@@ -88,64 +76,52 @@ class TemplateSimple {
 
     
     /**
-     * Ein paar Eigenschaften ihre Werte zuweisen
+     * Change template dir
      *
      * @access    public
      * @return    boolean
      */
-    public function template($tpl_dir = "", $lang_dir = "") 
+    public function template($tpl_dir = "") 
     {
-        // Template Ordner ändern
+        // change template directory
         if (!empty($tpl_dir)) {
             $this->templateDir = $tpl_dir;
         }
-
-        // Language Ordner ändern
-        if (!empty($lang_dir)) {
-            $this->languageDir = $lang_dir;
-        }
-        
         return true;
     }
 
     
     /**
-     * Die Templatedatei öffnen
+     * Load Template
      *
      * @access    public
-     * @param     string $file Dateiname des Templates
+     * @param     string $file Template file name
      * @return    boolean
      */
     public function load($file)
     {
-        // Die Eigenschaften zuweisen
+
         $this->templateName = $file;
         $this->templateFile = $this->templateDir.$file;
         if(!file_exists($this->templateFile)) {
             throw new Exception("Template file:" . $this->templateFile ." does not exist");
         }
-        // Wenn ein Dateiname übergeben wurde, versuchen, die Datei zu öffnen
         if(!empty($this->templateFile)) {
             if($fp = @fopen($this->templateFile, "r")) {
-                // Den Inhalt des Templates einlesen
+ 
                 $this->template = utf8_decode(fread($fp, filesize($this->templateFile))); 
-                #$this->template = fread($fp, filesize($this->templateFile)); 
                 fclose ($fp); 
             } else {
                 return false;
             }
         }
 
-        
-        // Die methode replaceFuntions() aufrufen
         $this->replaceFunctions();
-        
         return true;
     }
 
-
     /**
-     * Die Standard-Platzhalter ersetzen
+     * Replace the placeholders
      *
      * @access    public
      * @param     string $replace      Name of var which should be replaced
@@ -158,10 +134,8 @@ class TemplateSimple {
         return  true;
     }
 
-    
-    
     /**
-     * Die Funktionen ersetzen
+     * Replacement functions
      *
      * @access    protected
      * @return    boolean
@@ -170,18 +144,17 @@ class TemplateSimple {
     {
         // Includes ersetzen ( {include file="..."} )
         while(preg_match("/".$this->leftDelimiterF."include file=\"(.*)\.(.*)\"".$this->rightDelimiterF."/isUe", $this->template)) {
-            $this->template = preg_replace("/".$this->leftDelimiterF."include file=\"(.*)\.(.*)\"".$this->rightDelimiterF."/isUe", "file_get_contents(\$this->templateDir.'\\1'.'.'.'\\2')", $this->template);
+            $this->template = preg_replace("/".$this->leftDelimiterF."include file=\"(.*)\.(.*)\"".$this->rightDelimiterF."/isUe"
+                       , "file_get_contents(\$this->templateDir.'\\1'.'.'.'\\2')", $this->template);
         }
 
-    
-        // Kommentare löschen
+        // remove comments
         $this->template = preg_replace("/".$this->leftDelimiterC."(.*)".$this->rightDelimiterC."/isUe", "", $this->template);
-        
         return  true;
     }  
       
     /**
-     * Das fertige Template ausgeben
+     * Echo template after rendering
      *
      * @access    public
      * @return    boolean
@@ -193,9 +166,13 @@ class TemplateSimple {
         return true;
     }
     
-    
-    public function evalPhpCode($sEval){
-        // Your Web Page Source Code...
+    /**
+     * eval php code inside the template
+     * @param string $sEval 
+     */
+    public function evalPhpCode($sEval)
+    {
+
         preg_match_all("/(<\?php|<\?)(.*?)\?>/si", $sEval, $aMatches);
         $iMatchIndex = 0;
         while (isset($aMatches[0][$iMatchIndex])) {
@@ -209,9 +186,8 @@ class TemplateSimple {
             $sEval = preg_replace("/(<\?php|<\?)(.*?)\?>/si", $sExecPhp, $sEval, 1);
             $iMatchIndex++;
         }
-        //remove every placeholder thats left and not replaced:
+        //remove every placeholder thats left and not replaced yet because it won't happen anymore:
 	$sEval  = preg_replace( "/\{(.*?)\}/" , "" , $sEval);
-        
         $this->template = $sEval; 
     }
 

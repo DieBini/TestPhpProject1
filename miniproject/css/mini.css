@@ -7,6 +7,14 @@ body
 	text-align:center;
 }
 
+.loading_icon {
+                float:right;
+                background:url(http://nb.einsclone.lo/miniproject/statics/ajax-loader.gif) no-repeat 1px;
+                height:30px;
+                width:30px;
+                display:none
+                
+        }
 .done 
 {
         background:url(http://nb.einsclone.lo/miniproject/statics/iconIdea.gif) no-repeat 2px;
@@ -63,10 +71,18 @@ form.appnitro
 	margin:20px 20px 0;
 	padding:0 0 20px;
 }
+/**** Logo Section  *****/
+h2
+{
+        float:left;
+
+	
+}
 
 /**** Logo Section  *****/
 h1
 {
+        float:left;
 	background-color:#dedede;
 	margin:0;
 	min-height:0;
@@ -261,6 +277,7 @@ form li .datepicker
 
 .form_description p
 {
+    clear: left;
 	font-size:95%;
 	line-height:130%;
 	margin:0 0 12px;

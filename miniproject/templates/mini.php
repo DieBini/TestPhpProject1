@@ -16,12 +16,14 @@
                     </div>
                     
                     <img id="top" src="http://nb.einsclone.lo/miniproject/statics/top.png" alt="">
+                    
                         <div id="form_container">
 
-                            <h1><a>TestForm</a></h1>
+                    
+                            
                             <form id="miniform" class="appnitro"  method="post" action="#">
                                 <div class="form_description">
-                                    <h2>TestForm {$name}</h2>
+                                    <h2>TestForm {$name}</h2><div class="loading_icon"></div>
                                     <p>This is your form description. Click here to edit.</p>
                                 </div>						
                                 <ul >
