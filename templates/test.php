@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml; charset=ISO-8859-1" />
 </head>
 <body>
-<h1>{L_START}</h1>
+<h1>Test</h1>
 Hallo {$name}. Der Aktuelle Timestamp lautet: {$time}
 {* Ein Template einbinden *}
 {include file="othertemplate.tpl"}
