@@ -1,9 +1,13 @@
 <?php
-// add line test
-require_once 'controllers/Maintwocontroller.php';
 
+require_once 'controllers/Maintwocontroller.php';   // get Maincontroller
 $mainObj = new Maintwocontroller(__FILE__);
-$output = $mainObj->controllerObject->{$mainObj->methodName}();
+$contObj = $mainObj->controllerObject;              // get controller object
+$output = $contObj->{$mainObj->methodName}();       // Call
+include('templates/' . $contObj->getTemplateName() . '.php'); // load html
 
-print_r($output);
-     
+      
+
+
+
+

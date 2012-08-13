@@ -5,11 +5,8 @@
  * @author sabinesteinkamp
  */
 
-require_once 'library/Db.php'; // Database
+require_once 'models/MainModel.php'; // Simple Wrapper for Database Object
 
-/**
- *  
- */
 class Maintwocontroller {
 
     /**
@@ -32,11 +29,14 @@ class Maintwocontroller {
      * @var object 
      */
     public $controllerObject = '';
+    
     /**
-     * DB options
-     * @var array 
+     * html template file to include
+     * @var string 
      */
-    protected $dbOptions = array();
+    public $templateName = '';
+
+
     /**
      * 
      * @param type $fileName 
@@ -75,7 +75,7 @@ class Maintwocontroller {
     public function getFileName() 
     {
         if (($this->calledByFile == "")) {
-            return "index";
+            return "index"; // default action method
         }
         $fileName = $this->calledByFile;
         $sPosDirDelim = strrpos($fileName, '/');
@@ -98,22 +98,19 @@ class Maintwocontroller {
     }
 
     /**
-     * Get database
-     * @param array $options
-     * @return object \Db 
+     * Get template name
      */
-    public function getDatabase() 
+    public function getTemplateName()
     {
-        return new Db($this->dbOptions);
+        return $this->templateName;
     }
     
     /**
-     * set db options to be able to inject different dbs
-     * @param array $options
+     *  Set template name
      */
-    public function setDatabaseOptions($options) 
+    public function setTemplateName($templateName)
     {
-        $this->dbOptions = $options;
+        $this->templateName = $templateName;
     }
 
 }

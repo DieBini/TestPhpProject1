@@ -8,7 +8,7 @@ class Db extends PDO {
 
     private $engine = 'mysql';
     private $host = '';
-    private $database = '';
+    private $schema = '';
     private $user = '';
     private $pass = '';
     private $iniFile = 'DBSettings.ini';
@@ -29,7 +29,7 @@ class Db extends PDO {
         if(isset($options['user'])) $this->user = $options['user'];
         if(isset($options['pass'])) $this->pass = $options['pass'];
         
-        $dns = $this->engine.':dbname='.$this->database.";host=".$this->host;
+        $dns = $this->engine.':dbname='.$this->schema.";host=".$this->host;
         return parent::__construct( $dns, $this->user, $this->pass );
     }
 }
