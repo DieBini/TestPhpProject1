@@ -26,12 +26,12 @@ class MainModel {
     protected $dbObj = '';
     
     /**
-     * 
+     * Get databse object in construc
      */
     public function __construct($dbObj="") 
     {
         if (isset($dbObj) && $dbObj !== '') {
-           $this->dbObj = $dbObj; 
+           $this->dbObj = $dbObj; // to be able to mock it
         } else {
            $this->dbObj = $this->getDatabase();
         }

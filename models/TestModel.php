@@ -14,6 +14,28 @@ class TestModel extends MainModel{
     {
         parent::__construct($dbObj);
     }
+    
+    /**
+     * Get data from db
+     * @return array 
+     */
+    public function getDataFromDb() 
+    {        
+        try {
+            $dbResult = $this->dbObj->query("SELECT * FROM tb_hotels");
+            $i = 0;
+            $resultSet = array();
+            foreach ($dbResult as $row) {
+                $resultSet[$i] = $row;
+                $i++;
+            }
+            return $resultSet;
+        } catch (PDOException $e) {
+            echo 'DBError: ' . $e->getMessage();
+            die();
+        }
+    }
+    
     /**
      * Insert data into DB table
      * @param string $sInserts 
