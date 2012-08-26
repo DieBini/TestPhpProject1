@@ -22,7 +22,7 @@ class Terawurfl_Application_Resource_Loader extends Zend_Application_Resource_Re
         // setting for use CacheManager for storage is on, check if object is there:
         if (isset($options["usecachemanager"]) 
             && $options["usecachemanager"] == "yes") {  
-           $this->checkCachemanagerIfUsed();
+           $this->checkCachemanager();
         }
         // setting for using controller action helper is on:
         if (isset($options['checkviewhelper']) && $options['checkviewhelper'] == "on") {
@@ -34,7 +34,7 @@ class Terawurfl_Application_Resource_Loader extends Zend_Application_Resource_Re
      * Check if Cachemanager resource is set up
      * Throw exception in case it is not and resources.loader.usecachemanager = "yes"
      */
-    protected function checkCachemanagerIfUsed() {
+    protected function checkCachemanager() {
         
         $bootstrap = $this->getBootstrap();
         $cachemanager = $bootstrap->getPluginResource('cachemanager');
@@ -44,7 +44,8 @@ class Terawurfl_Application_Resource_Loader extends Zend_Application_Resource_Re
     }
         
     /**
-     * Register Controller Action Helper 
+     * Register Controller Action Helper "device"
+     * Note that existing "Device" View Helper are going to be unset and TW one will be added!
      * <code>
      * // call helper in Controller :
      * $device = $this->_helper->getHelper('Device');
@@ -64,7 +65,8 @@ class Terawurfl_Application_Resource_Loader extends Zend_Application_Resource_Re
     
     /**
      * Check configurations, if mandatory Device Helper already registered somewhere else
-     * Throw Exception in case it is because terawurfl library need to use the Terawurfl one
+     * Throw Exception in case it is because terawurfl library excpects to use the Terawurfl one
+     * 
      */
     protected function checkConfigurations() {
        

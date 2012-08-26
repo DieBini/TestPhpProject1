@@ -32,6 +32,11 @@ class Testcontroller extends Maincontroller{
         return "Haaaahaaaa";
     }
 
+    public function testzweiRequest ()
+    {
+        $this->setTemplateName("loadform");
+        return "Neues Fahrrad gekauft";
+    }
     
     
 }
